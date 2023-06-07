@@ -1,20 +1,22 @@
-import HeaderPresenter from './presenter/header-presenter.js';
-import TripEventsPresenter from './presenter/trip-events-presenter.js';
-import TripEventsModel from './model/trip-events-model.js';
-import OfferByTypeModel from './model/offer-model.js';
-import TripEventDestinationModel from './model/trip-event-destination-model.js';
+import FiltersView from './view/filter-view';
+import MenuView from './view/menu-navigation-view';
+import EventsPresenter from './presenter/presenter';
+import { render } from './render';
+import PointsModel from './model/points-model';
+import { getPoints, getDestinations, getOffersByType } from './mock/point';
 
-const EVENTS_COUNT = 20;
+const siteHeaderElement = document.querySelector('.trip-main');
+const siteMainElement = document.querySelector('.page-main');
+const tripPresenter = new EventsPresenter(siteMainElement.querySelector('.trip-events'));
 
-const tripMainContainer = document.querySelector('.trip-main');
-const tripEventsComponent = document.querySelector('.trip-events');
+const points = getPoints();
+const destinations = getDestinations();
+const offers = getOffersByType();
 
-const headerPresenter = new HeaderPresenter(tripMainContainer);
+const pointsModel = new PointsModel();
 
-const offerByTypeModel = new OfferByTypeModel();
-const destinationModel = new TripEventDestinationModel(EVENTS_COUNT);
-const tripEventsPresenter = new TripEventsPresenter(tripEventsComponent,
-  new TripEventsModel(EVENTS_COUNT, offerByTypeModel.getOffers().length, destinationModel.getDestinations()), offerByTypeModel);
+render(new FiltersView(), siteHeaderElement.querySelector('.trip-controls__filters'));
+render(new MenuView(), siteHeaderElement.querySelector('.trip-controls__navigation'));
 
-headerPresenter.init();
-tripEventsPresenter.init();
+pointsModel.init(points, destinations, offers);
+tripPresenter.init(pointsModel);

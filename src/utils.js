@@ -1,26 +1,46 @@
-const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+import dayjs from 'dayjs';
 
-const getRandomIntInclusively = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  if(min < 0 || max < 0){
-    return -1;
-  }
-  if(min > max){
-    [min, max] = [max, min];
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+const MINUTES_PER_HOUR_COUNT = 60;
+const MINUTES_PER_DAY_COUNT = 1440;
+const TIME_FORMAT = 'hh:mm';
+const DATE_FORMAT = 'YYYY-MM-DD';
+const DATETIME_FORMAT = 'DD/MM/YY hh:mm';
+
+const humanizePointDueDate = (date) => dayjs(date).format('DD MMM');
+
+const duration = (dateFrom, dateTo) => {
+  const start = dayjs(dateFrom);
+  const end = dayjs(dateTo);
+  const difference = end.diff(start, 'minute');
+
+  const days = Math.floor(difference / MINUTES_PER_DAY_COUNT);
+  const restHours = Math.floor((difference - days * MINUTES_PER_DAY_COUNT) / MINUTES_PER_HOUR_COUNT);
+  const restMinutes = difference - (days * MINUTES_PER_DAY_COUNT + restHours * MINUTES_PER_HOUR_COUNT);
+
+  const daysOutput = (days) ? `${days}D` : '';
+  const hoursOutput = (restHours) ? `${restHours}H` : '';
+  const minutesOutput = (restMinutes) ? `${restMinutes}M` : '';
+
+  return `${daysOutput} ${hoursOutput} ${minutesOutput}`;
 };
 
-const uppperFirstSymbol = (word) => word.charAt(0).toUpperCase() + word.slice(1);
+const getDate = (date) => dayjs(date).format(DATE_FORMAT);
 
-const shuffle = (array) => {
-  for(let firstIndex = array.length - 1; firstIndex > 0; firstIndex--) {
-    const randomIndex = Math.floor(Math.random() * (firstIndex + 1));
-    [array[firstIndex], array[randomIndex]] = [array[randomIndex], array[firstIndex]];
-  }
+const getTime = (date) => dayjs(date).format(TIME_FORMAT);
 
-  return array;
+const getDateTime = (date) => dayjs(date).format(DATETIME_FORMAT);
+
+const getRandomInteger = (a = 0, b = 1) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export {getRandomIntInclusively, uppperFirstSymbol, TYPES, shuffle};
+const getRandomElement = (elements) => {
+  const MIN = 0;
+  const max = elements.length - 1;
+  return elements[getRandomInteger(MIN, max)];
+};
+
+export { getRandomInteger, getRandomElement, humanizePointDueDate, duration, getDate, getDateTime, getTime };
