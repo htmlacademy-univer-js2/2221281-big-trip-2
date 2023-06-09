@@ -19,7 +19,7 @@ const pointsModel = new PointsModel();
 pointsModel.init(points, destinations, offers);
 tripPresenter.init(pointsModel);
 
-const filters = generateFilters(points)
+const filters = generateFilters(points);
 
 render(new FiltersView({filters}), siteHeaderElement.querySelector('.trip-controls__filters'));
 render(new MenuView(), siteHeaderElement.querySelector('.trip-controls__navigation'));
