@@ -1,8 +1,9 @@
 import CreateFormView from "../view/trip-event-add-view";
 import EditFormView from "../view/trip-event-edit-view";
-import EventsView from "../view/trip-events-list-view";
+import PointsListView from "../view/trip-events-list-view";
 import RoutePointView from "../view/route-point-view";
 import SortView from "../view/sort-view";
+import EmptyPointsListView from "../view/empty-points-list-view";
 import { render } from "../render";
 
 export default class EventsPresenter {
@@ -14,7 +15,7 @@ export default class EventsPresenter {
     #offers = null;
 
     constructor(container) {
-        this.#eventsList = new EventsView();
+        this.#eventsList = new PointsListView();
         this.#container = container;
     }
 
@@ -23,10 +24,14 @@ export default class EventsPresenter {
         this.#boardPoints = [...this.#pointsModel.points];
         this.#destinations = [...this.#pointsModel.destinations];
         this.#offers = [...this.#pointsModel.offers];
-        render(new SortView(), this.#container);
-        render(this.#eventsList, this.#container);
-        for (const point of this.#boardPoints) {
-            this.#renderPoint(point)
+        if(this.#boardPoints.length === 0) {
+            render(new EmptyPointsListView(), this.#container);
+        } else {
+            render(new SortView(), this.#container);
+            render(this.#eventsList, this.#container);
+            for (const point of this.#boardPoints) {
+                this.#renderPoint(point)
+            }
         }
     }
 
