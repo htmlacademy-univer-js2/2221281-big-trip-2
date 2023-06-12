@@ -31,6 +31,7 @@
     "babel-loader": "^9.1.2",
     "copy-webpack-plugin": "^11.0.0",
     "dayjs": "^1.11.8",
+    "flatpickr": "^4.6.13",
     "nanoid": "^4.0.2",
     "style-loader": "^3.3.3",
     "webpack": "^5.75.0",
