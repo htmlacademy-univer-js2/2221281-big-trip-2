@@ -91,4 +91,4 @@ const generatePoint = () => {
 
 const getPoints = () => Array.from({length: COUNT}).map(() => generatePoint());
 
-export {getPoints, getDestinations, getOffersByType };
+export {getPoints, getDestinations, getOffersByType, TYPES };
