@@ -11,21 +11,6 @@ const getRandomElement = (elements) => {
   return elements[getRandomInteger(MIN, max)];
 };
 
-const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-  if (index === -1) {
-
-    return items;
-
-  }
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
-
-};
-
 const toUpperCaseFirstLetter = (value) => {
   if (value === null || value === '') {
     return value;
@@ -35,4 +20,4 @@ const toUpperCaseFirstLetter = (value) => {
   return firstLetter + otherLetters;
 };
 
-export { getRandomInteger, updateItem, getRandomElement, toUpperCaseFirstLetter };
+export { getRandomInteger, getRandomElement, toUpperCaseFirstLetter };
