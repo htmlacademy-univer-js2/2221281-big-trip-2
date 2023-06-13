@@ -1,7 +1,7 @@
 import { render, replace, remove } from '../framework/render.js';
-import FiltersView from '../view/filter-view';
-import { filter } from '../utils/filter';
-import { FilterType, UpdateType, FilterTypeDescriptions } from '../utils/consts';
+import FiltersView from '../view/filter-view.js';
+import { filter } from '../utils/filter.js';
+import { FilterType, UpdateType, FilterTypeDescriptions } from '../utils/consts.js';
 import NewPointButtonView from '../view/new-point-view.js';
 import MenuView from '../view/menu-navigation-view.js';
 
@@ -20,8 +20,8 @@ export default class HeaderPresenter {
   #menuComponent = null;
 
   constructor({container, btnClick, pointsModel, filtersModel}) {
-    this.#filterContainer = container.querySelector('.trip-controls__filters');
     this.#btnContainer = container;
+    this.#filterContainer = container.querySelector('.trip-controls__filters');
     this.#menuContainer = container.querySelector('.trip-controls__navigation');
     this.#openCreatePointForm = btnClick;
     this.#filtersModel = filtersModel;
