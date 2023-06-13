@@ -1,7 +1,7 @@
 import { render, remove, RenderPosition } from '../framework/render.js';
 import EditFormView from '../view/trip-event-edit-view.js';
 import {nanoid} from 'nanoid';
-import { UserAction, UpdateType } from '../utils/consts';
+import { UserAction, UpdateType } from '../utils/consts.js';
 
 export default class PointNewPresenter {
   #pointListContainer = null;
@@ -9,13 +9,17 @@ export default class PointNewPresenter {
   #changeData = null;
   #destroyCallback = null;
   #pointsModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
   #destinations = null;
   #offers = null;
 
-  constructor(pointListContainer, changeData, pointsModel) {
+  constructor({pointListContainer, changeData, pointsModel, destinationsModel, offersModel}) {
     this.#pointListContainer = pointListContainer;
     this.#changeData = changeData;
     this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
   }
 
   init = (callback) => {
@@ -23,8 +27,8 @@ export default class PointNewPresenter {
     if (this.#formEditComponent !== null) {
       return;
     }
-    this.#destinations = [...this.#pointsModel.destinations];
-    this.#offers = [...this.#pointsModel.offers];
+    this.#destinations = [...this.#destinationsModel.destinations];
+    this.#offers = [...this.#offersModel.offers];
     this.#formEditComponent = new EditFormView({
       destinations: this.#destinations,
       offers: this.#offers,
